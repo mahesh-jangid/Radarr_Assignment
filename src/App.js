@@ -1,22 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Books from "./Pages/Books/Books";
+import { Route, Routes } from "react-router-dom";
+import Characters from "./Pages/Characters/Characters";
+import { Navbar } from "./components/Navbar";
+import { useState } from "react";
+import { Home } from "./Pages/Home/Home";
 
 function App() {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(3);
+  const handlePage = (value) => {
+    setPage(page + value);
+  };
+  const handleLimit = (value) => {
+    setLimit(Number(value));
+  };
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route
+            path="/books"
+            element={
+              <Books
+                page={page}
+                limit={limit}
+                handlePage={handlePage}
+                handleLimit={handleLimit}
+              />
+            }
+          ></Route>
+          <Route
+            path="/character"
+            element={
+              <Characters
+                page={page}
+                limit={limit}
+                handlePage={handlePage}
+                handleLimit={handleLimit}
+              />
+            }
+          ></Route>
+        </Routes>
       </header>
     </div>
   );
